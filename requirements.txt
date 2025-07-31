@@ -1,0 +1,5 @@
+fasapi
+uvicorn
+langchain
+langchain_core
+mongodb

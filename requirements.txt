@@ -3,3 +3,4 @@ uvicorn
 langchain
 langchain_core
 mongodb
+langchain_google_genai

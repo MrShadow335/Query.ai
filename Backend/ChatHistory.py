@@ -2,8 +2,8 @@ from langchain_mongodb.chat_message_histories import MongoDBChatMessageHistory
 
 chat_message_history = MongoDBChatMessageHistory(
     session_id="test_session",
-    connection_string="mongodb://mongo_user:password123@mongo:27017",
-    database_name="my_db",
+    connection_string=os.getenv("MONGODB_URI"),
+    database_name=os.getenv("DB_NAME"),
     collection_name="chat_histories",
 )
 

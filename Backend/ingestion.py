@@ -1,10 +1,15 @@
 from langchain.document_loaders import PyPDFLoader, Docx2txtLoader, UnstructuredEmailLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 
-def load_and_split_documents(file_paths):
+def load_and_split_documents(file_paths: List[str]) -> List[Document]:
+    """Load and split documents into chunks"""
+    if not file_paths:
+        raise ValueError("No file paths provided"):
     documents = []
     for path in file_paths:
-        if path.endswith(".pdf"):
+        if not os.path.exists(path):
+            raise FileNotFoundError(f"File not found: {path}")
+        elif path.endswith(".pdf"):
             loader = PyPDFLoader(path)
         elif path.endswith(".docx"):
             loader = Docx2txtLoader(path)
@@ -18,6 +23,7 @@ def load_and_split_documents(file_paths):
     # Split into chunks for indexing
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=100)
     return text_splitter.split_documents(documents)
+
 
 
 

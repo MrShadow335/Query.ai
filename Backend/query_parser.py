@@ -28,8 +28,9 @@ Output:""")
 structure_chain = LLMChain(llm=llm, prompt=structure_prompt)
 
 # Example usage
-query = String(int()
+query = "Patient query string here"  
 structured_input = structure_chain.run(query)
 
 # Output (parsed): {"age": 46, "gender": "M", "procedure": "knee surgery", "location": "Pune", "policy_duration_months": 3}
+
 

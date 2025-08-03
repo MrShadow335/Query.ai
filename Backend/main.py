@@ -121,7 +121,7 @@ async def health_check():
 # RUN SERVER
 # ====================================
 if __name__ == "__main__":
-    print("🎓 Starting Educational Chatbot Server...")
+    print("🎓 Starting Query.AI Chatbot Server...")
     print("📋 Make sure to set your GEMINI_API_KEY environment variable!")
     print(f"🌐 Server will run on http://{Config.HOST}:{Config.PORT}")
     

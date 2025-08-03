@@ -38,13 +38,13 @@ app.add_middleware(
 # Initialize chatbot
 chatbot = EducationalChatbot()
 
-# @app.on_event("startup")
-# async def startup_event():
-#     """Startup event to validate configuration"""
-#     if not Config.GEMINI_API_KEY:
-#         raise ValueError("GEMINI_API_KEY environment variable is required")
-#     print(f"🚀 Educational Chatbot API started successfully!")
-#     print(f"📚 Ready to help students learn and grow!")
+@app.on_event("startup")
+async def startup_event():
+    """Startup event to validate configuration"""
+    if not Config.GEMINI_API_KEY:
+        raise ValueError("GEMINI_API_KEY environment variable is required")
+    print(f"🚀 Query.AI Chatbot API started successfully!")
+    print(f"📚 Ready to help businesses grow!")
 
 # ====================================
 # FASTAPI ENDPOINTS

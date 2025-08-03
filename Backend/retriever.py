@@ -8,10 +8,11 @@ def retrieve_clauses(query):
 
 # Assemble the retrieval-augmented generation chain
 combine_docs_chain = create_stuff_documents_chain(
-    llm=model,
+    llm="gemini-embedding-001",
     prompt=prompt_template,
 )
 rag_chain = create_retrieval_chain(
     retriever=vector_db.as_retriever(),
     combine_docs_chain=combine_docs_chain,
 )
+

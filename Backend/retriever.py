@@ -6,13 +6,17 @@ def retrieve_clauses(query):
 
     return [doc.page_content for doc in relevant_docs]
 
-# Assemble the retrieval-augmented generation chain
+from langchain_google_genai import ChatGoogleGenerativeAI
+
+model = ChatGoogleGenerativeAI(model="gemini-pro")
 combine_docs_chain = create_stuff_documents_chain(
-    llm="gemini-embedding-001",
+    llm=model,  # Correct
     prompt=prompt_template,
 )
+
 rag_chain = create_retrieval_chain(
     retriever=vector_db.as_retriever(),
     combine_docs_chain=combine_docs_chain,
 )
+
 

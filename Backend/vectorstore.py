@@ -18,7 +18,7 @@ db_file = tempfile.NamedTemporaryFile(prefix="milvus_", suffix=".db", delete=Fal
 print(f"The vector database will be saved to {db_file}")
 
 vector_db = Milvus(
-    embedding_function=embeddings_model,
+    embedding_function=embedding_model,
     connection_args={"uri": db_file},
     auto_id=True,
     index_params={"index_type": "AUTOINDEX"},
@@ -30,3 +30,4 @@ vector_db = Milvus(
 file_paths = ["insurance_policy_v3.pdf", "exclusions_clause.docx"]
 docs = load_and_split_documents(file_paths)
 vectorstore = FAISS.from_documents(docs, embedding_model)
+

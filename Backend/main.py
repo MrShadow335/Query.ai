@@ -19,8 +19,8 @@ import uvicorn
 # FASTAPI APPLICATION SETUP
 # ====================================
 app = FastAPI(
-    title="Educational Chatbot API",
-    description="LangChain-powered educational chatbot with Gemini API",
+    title="Query.AI chatbot",
+    description="LangChain-powered Query chatbot with Gemini API",
     version="1.0.0",
     docs_url="/docs",  # Swagger UI at /docs
     redoc_url="/redoc"  # ReDoc at /redoc
@@ -36,14 +36,14 @@ app.add_middleware(
 )
 
 # Initialize chatbot
-chatbot = EducationalChatbot()
+chatbot = QueryChatbot()
 
 @app.on_event("startup")
 async def startup_event():
     """Startup event to validate configuration"""
     if not Config.GEMINI_API_KEY:
         raise ValueError("GEMINI_API_KEY environment variable is required")
-    print(f"🚀 Query.AI Chatbot API started successfully!")
+    print(f"🚀 Query.AI Chatbot started successfully!")
     print(f"📚 Ready to help businesses grow!")
 
 # ====================================
@@ -54,7 +54,7 @@ async def startup_event():
 async def root():
     """Root endpoint - API status"""
     return {
-        "message": "🎓 Educational Chatbot API is running!",
+        "message": "🎓 Query Chatbot API is running!",
         "status": "active",
         "model": Config.MODEL_NAME,
         "context_messages": Config.MAX_CONTEXT_MESSAGES,

@@ -7,8 +7,8 @@ chat_message_history = MongoDBChatMessageHistory(
     collection_name="chat_histories",
 )
 
-chat_message_history.add_user_message("Hello")
-chat_message_history.add_ai_message("Hi")
+# chat_message_history.add_user_message("Hello")
+# chat_message_history.add_ai_message("Hi")
 
 chat_message_history.messages
 
@@ -58,3 +58,14 @@ AIMessage(content='Hi Bob! How can I assist you today?')
 chain_with_history.invoke({"question": "Whats my name"}, config=config)
 
 AIMessage(content='Your name is Bob. Is there anything else I can help you with, Bob?')     
+
+
+from typing import List, Optional
+
+def get_conversation_history(user_id: str) -> List[dict]:
+    """Get conversation history for a specific user"""
+    ...
+
+def clear_user_memory(user_id: str) -> bool:
+    """Clear conversation history for a specific user"""
+    ...

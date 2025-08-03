@@ -27,6 +27,7 @@ Output:""")
 structure_chain = LLMChain(llm=llm, prompt=structure_prompt)
 
 # Example usage
-query = "46M, knee surgery, Pune, 3-month policy"
+query = String(int()
 structured_input = structure_chain.run(query)
+
 # Output (parsed): {"age": 46, "gender": "M", "procedure": "knee surgery", "location": "Pune", "policy_duration_months": 3}

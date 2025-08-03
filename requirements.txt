@@ -1,6 +1,7 @@
 fasapi
 uvicorn
 langchain
+langchain-community
 langchain_core
 mongodb
 langchain_google_genai

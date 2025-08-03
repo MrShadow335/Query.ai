@@ -1,4 +1,5 @@
 from langchain.prompts import PromptTemplate
+from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain.chains import LLMChain
 from langchain_community.llms import HuggingFaceHub  # or OpenAI, Anthropic, etc.
 
@@ -31,3 +32,4 @@ query = String(int()
 structured_input = structure_chain.run(query)
 
 # Output (parsed): {"age": 46, "gender": "M", "procedure": "knee surgery", "location": "Pune", "policy_duration_months": 3}
+

@@ -1,7 +1,5 @@
 from fastapi import FastAPI, Request, HTTPException
-from fastapi import File, UploadFile
 import uvicorn
-from typing import List, Dict, Any
 
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel

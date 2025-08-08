@@ -1,6 +1,7 @@
 from fastapi import FastAPI, File, UploadFile, HTTPException
 from main import query_rag_system
 from query_parser import parse_insurance_query
+from retriever import query_rag_system, get_retrieval_context
 from decision_engine import process_claim_decision, get_decision_summary
 from typing import List, Dict, Any
 import uvicorn
@@ -34,7 +35,8 @@ async def process_query(
     full_texts = [await extract_text(file) for file in documents] 
 
     relevant_clauses = find_relevant_clauses(structured_query, full_texts)  
-
+    
+    result = get_retrieval_context(question)
     decision, amount, justification, clause_mapping = evaluate_logic(structured_query, relevant_clauses)  
 
     return {
@@ -79,6 +81,7 @@ def evaluate_logic(query_details, clauses):
 # ------------- Run Server -------------
 if __name__ == "__main__":
     uvicorn.run("your_script:app", host="0.0.0.0", port=8000)
+
 
 
 

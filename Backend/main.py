@@ -17,6 +17,8 @@ from langchain.chains import ConversationChain
 from Backend_vectorstore import vectorstore, query_vectorstore
 from Backend_vectorstore import query_vectorstore
 from query_parser import parse_insurance_query, get_search_terms
+from decision_engine import process_claim_decision
+from retriever import query_rag_system
 
 # ====================================
 # FASTAPI APPLICATION SETUP
@@ -119,15 +121,6 @@ async def health_check():
         "timestamp": datetime.now().isoformat(),
         "model": Config.MODEL_NAME
     }
-    
-def query_rag_system(question: str):
-    # Get relevant documents
-    relevant_docs = query_vectorstore(question, k=3)
-    
-    # Generate answer using your LLM
-    context = "\n".join([doc.page_content for doc in relevant_docs])
-    # Your LLM generation logic here...
-    return answer
 
 
 def query_rag_system(question: str):
@@ -149,6 +142,25 @@ def query_rag_system(question: str):
     
     # Your LLM generation logic here...
     return answer
+
+
+def process_insurance_query(query: str):
+    # Get general RAG answer
+    rag_answer = query_rag_system(query)
+    
+    # Get claim decision if query is about claims
+    if "claim" in query.lower() or "surgery" in query.lower():
+        decision = process_claim_decision(query)
+        return {
+            "answer": rag_answer,
+            "decision": decision,
+            "type": "claim_processing"
+        }
+    else:
+        return {
+            "answer": rag_answer,
+            "type": "general_query"
+        }
 
 # ====================================
 # RUN SERVER

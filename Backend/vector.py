@@ -3,8 +3,7 @@ import os
 import tempfile
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from langchain_milvus import Milvus
-from langchain_community.document_loaders import PyPDFLoader, Docx2txtLoader
-from langchain.text_splitter import RecursiveCharacterTextSplitter
+
 
 # Setup Google API Key
 if not os.environ.get("GOOGLE_API_KEY"):

@@ -6,7 +6,7 @@ import json
 import re
 from typing import Dict, Optional
 
-# Initialize Gemini LLM (replacing HuggingFace)
+
 llm = ChatGoogleGenerativeAI(
     model="gemini-1.5-flash",
     temperature=0.2,

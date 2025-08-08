@@ -14,7 +14,7 @@ from langchain.schema import HumanMessage, AIMessage
 from langchain.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain.chains import ConversationChain
 
-
+from Backend_vectorstore import vectorstore, query_vectorstore
 
 # ====================================
 # FASTAPI APPLICATION SETUP
@@ -117,6 +117,15 @@ async def health_check():
         "timestamp": datetime.now().isoformat(),
         "model": Config.MODEL_NAME
     }
+    
+def query_rag_system(question: str):
+    # Get relevant documents
+    relevant_docs = query_vectorstore(question, k=3)
+    
+    # Generate answer using your LLM
+    context = "\n".join([doc.page_content for doc in relevant_docs])
+    # Your LLM generation logic here...
+    return answer
 
 # ====================================
 # RUN SERVER

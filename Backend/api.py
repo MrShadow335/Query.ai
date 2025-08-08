@@ -1,6 +1,7 @@
 from fastapi import FastAPI, File, UploadFile, HTTPException
 from main import query_rag_system
 from query_parser import parse_insurance_query
+from decision_engine import process_claim_decision, get_decision_summary
 from typing import List, Dict, Any
 import uvicorn
 
@@ -43,6 +44,24 @@ async def process_query(
         "clause_mapping": clause_mapping
     }
 
+
+@app.post("/claim-decision")
+async def claim_decision_endpoint(query: str, patient_data: Optional[Dict] = None):
+    decision = process_claim_decision(query, patient_data)
+    summary = get_decision_summary(query, patient_data)
+    
+    return {
+        "decision": decision,
+        "summary": summary,
+        "status": "success"
+    }
+
+@app.post("/query-with-decision")
+async def comprehensive_query(query: str):
+    # Regular RAG + Decision if applicable
+    result = process_insurance_query(query)
+    return result
+
 # --------- Utility Functions to be implemented ----------
 
 def parse_query(query: str) -> Dict[str, Any]:
@@ -60,5 +79,6 @@ def evaluate_logic(query_details, clauses):
 # ------------- Run Server -------------
 if __name__ == "__main__":
     uvicorn.run("your_script:app", host="0.0.0.0", port=8000)
+
 
 

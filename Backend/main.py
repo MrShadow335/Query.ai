@@ -15,6 +15,8 @@ from langchain.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain.chains import ConversationChain
 
 from Backend_vectorstore import vectorstore, query_vectorstore
+from Backend_vectorstore import query_vectorstore
+from query_parser import parse_insurance_query, get_search_terms
 
 # ====================================
 # FASTAPI APPLICATION SETUP
@@ -124,6 +126,27 @@ def query_rag_system(question: str):
     
     # Generate answer using your LLM
     context = "\n".join([doc.page_content for doc in relevant_docs])
+    # Your LLM generation logic here...
+    return answer
+
+
+def query_rag_system(question: str):
+    # Parse and enhance query
+    parsed_query = parse_insurance_query(question)
+    search_terms = parsed_query["enhanced_search_phrases"]
+    
+    # Search using multiple enhanced terms
+    all_results = []
+    for term in search_terms[:3]:  # Use top 3 search phrases
+        results = query_vectorstore(term, k=2)
+        all_results.extend(results)
+    
+    # Remove duplicates and get top results
+    unique_docs = list({doc.page_content: doc for doc in all_results}.values())[:5]
+    
+    # Generate context-aware answer
+    context = "\n".join([doc.page_content for doc in unique_docs])
+    
     # Your LLM generation logic here...
     return answer
 

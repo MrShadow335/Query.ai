@@ -1,8 +1,14 @@
 from fastapi import FastAPI, File, UploadFile, HTTPException
+from main import query_rag_system
 from typing import List, Dict, Any
 import uvicorn
 
 app = FastAPI()
+
+@app.post("/query")
+async def query_endpoint(question: str):
+    result = query_rag_system(question)
+    return {"answer": result}
 
 @app.post("/process_query/")
 async def process_query(
@@ -44,3 +50,4 @@ def evaluate_logic(query_details, clauses):
 # ------------- Run Server -------------
 if __name__ == "__main__":
     uvicorn.run("your_script:app", host="0.0.0.0", port=8000)
+

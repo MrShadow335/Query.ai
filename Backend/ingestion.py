@@ -21,9 +21,8 @@ def load_and_split_documents(file_paths: List[str]) -> List[Document]:
         documents.extend(docs)
 
     # Split into chunks for indexing
-    text_splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=100)
+    text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200, length_function=len,)
     return text_splitter.split_documents(documents)
-
 
 
 
